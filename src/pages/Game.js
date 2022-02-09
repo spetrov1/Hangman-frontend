@@ -14,7 +14,7 @@ const Game = () => {
             data => data.json()
         );
 
-    const { data, error, mutate } = useSWR(initEndpointURL, fetcher, {
+    const { data, error } = useSWR(initEndpointURL, fetcher, {
         revalidateOnFocus: false,
         revalidateOnMount: true,
         revalidateOnReconnect: false,
@@ -22,7 +22,6 @@ const Game = () => {
         refreshWhenHidden: false,
         refreshInterval: 0
       });
-    
 
     if (error) {
         return <main> An error ocurred while sending request... </main>
@@ -30,12 +29,12 @@ const Game = () => {
     if (!data) {
         return <main> Loading... </main>;
     }
-    console.log(data);
+
     return (
         <main>
             <h2> The Game started </h2>
 
-            <Word data={data} word={data.word} />
+            <Word gameId={data.id} data={data} word={data.word} />
             <br /> <br />
             <Link to=''><Button variant="success"> Try </Button></Link>
 
