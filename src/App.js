@@ -1,5 +1,6 @@
 import { Redirect, Route, Switch } from "react-router-dom";
 import Game from "./pages/Game";
+import ResultDisplay from "./pages/ResultDisplay";
 import Welcome from "./pages/Welcome";
 
 function App() {
@@ -15,6 +16,9 @@ function App() {
         </Route>
         <Route path='/game'>
           <Game />
+        </Route>
+        <Route path='/displayResult'>
+          <ResultDisplay />
         </Route>
       </Switch>
     </div>

@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import useSWR from 'swr';
 import Word from '../components/Word';
 
 const Game = () => {
+
+    const history = useHistory();
 
     // send POST request using useSwr
     const initEndpointURL = "http://localhost:8080/games";
@@ -23,6 +23,13 @@ const Game = () => {
         refreshInterval: 0
       });
 
+    if (data && data.lives === 0) {
+        history.replace('/displayResult?res=loss');
+    }
+    if (data && !data.word.includes('_')) {
+        history.replace('/displayResult?res=win');
+    }
+
     if (error) {
         return <main> An error ocurred while sending request... </main>
     }
@@ -32,11 +39,9 @@ const Game = () => {
 
     return (
         <main>
-            <h2> The Game started </h2>
+            <h2> The Game started! </h2>
 
             <Word gameId={data.id} data={data} word={data.word} />
-            <br /> <br />
-            <Link to=''><Button variant="success"> Try </Button></Link>
 
             <p> Lives - {data.lives} </p>
 
